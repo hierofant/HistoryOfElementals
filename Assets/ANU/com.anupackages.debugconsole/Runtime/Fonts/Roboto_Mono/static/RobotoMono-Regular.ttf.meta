@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 66e43b3f5470d479cb9caeed6a91ec67
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Roboto Mono
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Fonts/Roboto_Mono/static/RobotoMono-Regular.ttf
+  uploadId: 635975

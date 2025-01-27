@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 25a4062f62b8c5f4cba42ce9850693f5
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.ndesk-options/Runtime/NDesk.Options/src/obj/Debug/netcoreapp2.2/NDesk.Options.AssemblyInfoInputs.cache
+  uploadId: 635975

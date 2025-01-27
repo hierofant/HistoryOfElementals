@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 057237aab1d364e32801edab6164a962
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Prefabs/Deshbord/info-button.prefab
+  uploadId: 635975

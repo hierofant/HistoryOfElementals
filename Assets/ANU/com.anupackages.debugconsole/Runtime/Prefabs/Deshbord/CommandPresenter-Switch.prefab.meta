@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4d79baf9dae044e3abf88e5f520a7072
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Prefabs/Deshbord/CommandPresenter-Switch.prefab
+  uploadId: 635975

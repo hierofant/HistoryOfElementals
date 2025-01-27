@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e2e58ef4d5c3e2c4fab04557356e45ff
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.ndesk-options/Tests/NDesk.Options.Tests.asmdef
+  uploadId: 635975

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: cdf5bfcb8105ade4199a4f97d711dc0f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Scripts/IngameDebug/Console/Suggestions/SubstringSearch.cs
+  uploadId: 635975

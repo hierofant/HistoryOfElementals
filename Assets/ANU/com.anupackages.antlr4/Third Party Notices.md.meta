@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: fc18408ca988142adb219fc6bcf59c1e
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.antlr4/Third Party Notices.md
+  uploadId: 635975

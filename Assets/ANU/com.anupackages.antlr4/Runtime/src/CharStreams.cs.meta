@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 32d50f248917640daaba289bfd3d0096
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.antlr4/Runtime/src/CharStreams.cs
+  uploadId: 635975

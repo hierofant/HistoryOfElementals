@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e2497c06fa07942dc9c7c5403a492f36
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Fonts/Roboto_Mono/static/RobotoMono-Regular
+    SDF.asset
+  uploadId: 635975

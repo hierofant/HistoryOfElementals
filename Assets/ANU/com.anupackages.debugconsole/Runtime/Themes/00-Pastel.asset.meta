@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 98c052ba81f9047b5963887f30446511
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Themes/00-Pastel.asset
+  uploadId: 635975

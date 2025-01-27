@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3733479a09bf24a36ba0c4eef443b54e
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Fonts/Roboto_Mono/LICENSE.txt
+  uploadId: 635975

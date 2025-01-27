@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2613482e51eef4c9882bd09feee2f9c7
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Samples/Scene Setup/Scripts/com.anu.debugconsole.samples.asmdef
+  uploadId: 635975

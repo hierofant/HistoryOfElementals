@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c4f9598673f8748aaa7f7062e2852c1e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Themes/03-DarkAlt.asset
+  uploadId: 635975

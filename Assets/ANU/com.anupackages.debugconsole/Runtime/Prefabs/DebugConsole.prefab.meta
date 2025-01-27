@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 99382c5606fb97d438f5f9eff0421582
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Prefabs/DebugConsole.prefab
+  uploadId: 635975

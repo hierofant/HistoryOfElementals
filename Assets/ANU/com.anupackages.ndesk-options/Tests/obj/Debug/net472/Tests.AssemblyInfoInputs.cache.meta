@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 28f11d722df8c434cae43bb454204bef
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.ndesk-options/Tests/obj/Debug/net472/Tests.AssemblyInfoInputs.cache
+  uploadId: 635975

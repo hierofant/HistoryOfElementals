@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1d70062113ad0bf4c86b22e05e0cc4d1
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.ndesk-options/README.md
+  uploadId: 635975

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d337ab21fc06c984ab040dc47c974f80
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.ndesk-options/Runtime/NDesk.Options/appveyor.yml
+  uploadId: 635975

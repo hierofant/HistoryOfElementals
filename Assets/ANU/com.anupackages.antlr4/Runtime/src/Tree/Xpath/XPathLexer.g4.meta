@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 37dc8e21b0b9c4a6798d8e689cfba924
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.antlr4/Runtime/src/Tree/Xpath/XPathLexer.g4
+  uploadId: 635975

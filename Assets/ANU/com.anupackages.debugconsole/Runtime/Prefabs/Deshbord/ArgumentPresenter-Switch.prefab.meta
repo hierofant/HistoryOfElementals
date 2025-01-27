@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6dd24efa6335f45b6876ece96031e4b9
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Prefabs/Deshbord/ArgumentPresenter-Switch.prefab
+  uploadId: 635975

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f91d4c802aae444ed8c13e643db5e1f8
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Prefabs/log-presenter.prefab
+  uploadId: 635975

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0ee82304f600dd545b1f847eb539e21c
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.ndesk-options/Runtime/NDesk.Options/src/snKey.snk
+  uploadId: 635975

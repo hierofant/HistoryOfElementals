@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 99c9720ab356a0642a771bea13969a05
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Samples/Scene Setup/Scenes/SceneSetUpSampleScene.unity
+  uploadId: 635975

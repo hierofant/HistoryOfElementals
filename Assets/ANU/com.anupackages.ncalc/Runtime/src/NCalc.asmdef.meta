@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e44edfe676ca94e13950c7617a8e2321
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.ncalc/Runtime/src/NCalc.asmdef
+  uploadId: 635975

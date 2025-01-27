@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 86e9e1d8ea70249d4ab48e82d50c68b4
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.ncalc/CHANGELOG.md
+  uploadId: 635975

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3393af115f04e4c9fbd7866bda9a4589
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.ncalc/Runtime/src/NCalc/ParameterArgs.cs
+  uploadId: 635975

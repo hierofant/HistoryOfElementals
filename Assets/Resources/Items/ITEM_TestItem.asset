@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc74276c1382a0a4aa18bfa12edfa34a, type: 3}
+  m_Name: ITEM_TestItem
+  m_EditorClassIdentifier: 
+  count: 0
+  MaxCount: 64
+  id: 1
+  displayName: TEST
+  systemName: TEST
+  description: NONE
+  icon: {fileID: 21300000, guid: 055a7b1e85bf74824886fc61b1e5da85, type: 3}
+  prefab: {fileID: 0}
+  type: 3
+  projectileComponent:
+    projectileDamage: 5
+    speed: 10
+    range: 20
+  meleeComponent:
+    durability: 100
+    sharpness: 10
+    attackSpeed: 1
+  shootingComponent:
+    durability: 100
+    tension: 50
+    reloadTime: 1.5
+  foodComponent:
+    saturation: 10
+    consumeTime: 2
+  armorComponent:
+    durability: 100
+    protectiont: 10

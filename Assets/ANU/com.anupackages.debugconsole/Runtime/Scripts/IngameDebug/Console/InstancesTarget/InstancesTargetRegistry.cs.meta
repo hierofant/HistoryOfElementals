@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9769a836c22c54aabb9f2f5bde14c7bc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Scripts/IngameDebug/Console/InstancesTarget/InstancesTargetRegistry.cs
+  uploadId: 635975

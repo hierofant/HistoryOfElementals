@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3bba82826463f4caf99cefa0285392dc
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/LICENCE.md
+  uploadId: 635975

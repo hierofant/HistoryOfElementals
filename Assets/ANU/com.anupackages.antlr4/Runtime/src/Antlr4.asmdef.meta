@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7ce74c47958ca4ba6a604d1a0694343f
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.antlr4/Runtime/src/Antlr4.asmdef
+  uploadId: 635975

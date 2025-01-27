@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b60d5f1383fce40cca9dd3ea2015ce33
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Prefabs/Deshbord/group.prefab
+  uploadId: 635975

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c9d2dfe3bbfef42698acc3eaea2fd36e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Themes/01-Light.asset
+  uploadId: 635975

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6c94eaaa9bea44be2a5fddae22e4b9af
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259584
+  packageName: ANU Runtime Console Commander
+  packageVersion: 2.1.4-pre.1
+  assetPath: Assets/ANU/com.anupackages.debugconsole/Runtime/Prefabs/Deshbord/CommandPresenter-Dropdown.prefab
+  uploadId: 635975
