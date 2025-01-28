@@ -323,8 +323,8 @@ namespace Inventory
             {
                 Cells[cellIndex].itemCountText.text = "";
             }
-            Debug.Log(Cells[cellIndex].itemStack.icon);
-            Cells[cellIndex].itemContainer.GetComponent<Image>().sprite = Cells[cellIndex].itemStack.icon;
+            Debug.Log(Cells[cellIndex].itemStack.Item.icon);
+            Cells[cellIndex].itemContainer.GetComponent<Image>().sprite = Cells[cellIndex].itemStack.Item.icon;
         }
         private void PlaceItemInFirstEmptySlot(ItemStack item)
         {
@@ -411,7 +411,7 @@ namespace Inventory
 
         private void SwapItemsInSlot(ItemStack item, int targetCell)
         {
-            if (Cells[targetCell].itemStack.id != 0)
+            if (Cells[targetCell].itemStack.Item.id != 0)
             {
                 ItemStack oldItem = Cells[targetCell].itemStack.Clone();
                 RemoveItem(targetCell);

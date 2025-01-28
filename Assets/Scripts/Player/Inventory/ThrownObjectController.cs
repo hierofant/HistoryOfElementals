@@ -8,13 +8,13 @@ public class ThrownObjectController : MonoBehaviour
 {
     private bool thrown;
     public bool DopCollision = true;
-    private Item itemInf;
+    private ItemStack itemInf;
 
-    public void SetItem(Item item)
+    public void SetItem(ItemStack item)
     {
         itemInf = item;
     }
-    public Item GetItem()
+    public ItemStack GetItem()
     {
         return itemInf;
     }

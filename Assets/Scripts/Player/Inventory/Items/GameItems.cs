@@ -62,6 +62,11 @@ namespace Game.Items
             Item = item;
             Count = Mathf.Clamp(count, 0, item.MaxCount);
         }
+        public ItemStack()
+        {
+            Item = null;
+            Count = 0;
+        }
 
         public ItemStack Clone()
         {
