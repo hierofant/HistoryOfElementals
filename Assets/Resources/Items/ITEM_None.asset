@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc74276c1382a0a4aa18bfa12edfa34a, type: 3}
   m_Name: ITEM_None
   m_EditorClassIdentifier: 
-  count: 512
   MaxCount: 1
   id: 0
   displayName: NONE
   systemName: NONE
   description: NONE
-  icon: {fileID: 21300000, guid: c011661d4d3a2428080ee254d967283c, type: 3}
+  icon: {fileID: 0}
   prefab: {fileID: 0}
   type: 3
   projectileComponent:

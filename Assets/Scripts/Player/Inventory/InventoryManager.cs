@@ -20,6 +20,7 @@ namespace Inventory
         [SerializeField] private GameObject cellHighlight; // ��������� ������� ������
         [SerializeField] private GameObject inventoryUI; // ������ ���������
         [SerializeField] private GameObject countUIText; // ����� ����������
+        [SerializeField] private GameObject imageUI; // ����� ����������
         [SerializeField] private GameObject thrownObject; // ������ ������������ ��������
         [SerializeField] private int currentCell = 0; // ������� ��������� ������ � ������� ������
         [SerializeField] private int hotbarSize = 5; // ���������� ������ � ������� ����
@@ -222,7 +223,8 @@ namespace Inventory
             draggedItemObject.GetComponent<Image>().preserveAspect = true;
             draggedItemObject.transform.SetParent(inventoryUI.transform);
             draggedItemObject.GetComponent<Image>().sprite = draggedItem.Item.icon;
-            draggedItemObject.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
+            draggedItemObject.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
+            draggedItemObject.transform.SetAsLastSibling();
             isDraggingItem = true;
         }
 
@@ -269,7 +271,7 @@ namespace Inventory
             for (int i = 0; i < Cells.Length; i++)
             {
                 Debug.Log(Cells[i].itemStack.Item.id);
-                if (Cells[i].itemStack.Item.id == slot)
+                if (Cells[i].itemStack.Item.id == slot && Cells[i].itemStack.Count < Cells[i].itemStack.Item.MaxCount)
                     return i;
             }
             return -1;
@@ -292,6 +294,7 @@ namespace Inventory
             if (Cells[inventoryCell].itemStack.Item.id == item.Item.id && Cells[inventoryCell].itemStack.Item.name == item.Item.name && Cells[inventoryCell].itemStack.Item.description == item.Item.description)
             {
                 int availableSpace = maxCount - Cells[inventoryCell].itemStack.Count;
+                Debug.Log(availableSpace + " " + item.Count + " " + Cells[inventoryCell].itemStack.Count);
                 if (item.Count <= availableSpace)
                 {
                     Cells[inventoryCell].itemStack.Count += item.Count;
@@ -326,14 +329,31 @@ namespace Inventory
         {
             if (Cells[cellIndex].itemStack.Count > 1)
             {
+                Cells[cellIndex].itemCountText = Instantiate(countUIText, Cells[cellIndex].itemContainer.transform).GetComponent<TMP_Text>();
                 Cells[cellIndex].itemCountText.text = Cells[cellIndex].itemStack.Count.ToString();
             }
             else
             {
-                Cells[cellIndex].itemCountText.text = "";
+                if(Cells[cellIndex].itemCountText != null)
+                {
+                    Destroy(Cells[cellIndex].itemCountText.gameObject);
+                }
             }
-            Debug.Log(Cells[cellIndex].itemStack.Item.icon);
-            Cells[cellIndex].itemContainer.GetComponent<Image>().sprite = Cells[cellIndex].itemStack.Item.icon;
+            if (Cells[cellIndex].itemStack.Item.icon != null)
+            {
+                Instantiate(imageUI, Cells[cellIndex].itemContainer).GetComponent<Image>().sprite = Cells[cellIndex].itemStack.Item.icon;
+            }
+            else
+            {
+                if (Cells[cellIndex].itemContainer.transform.childCount != 0)
+                {
+                    for(int i = 0; i < Cells[cellIndex].itemContainer.transform.childCount; i++)
+                    {
+                        Destroy(Cells[cellIndex].itemContainer.GetChild(i).gameObject);
+                    }
+                    Debug.Log($"!=0, ={Cells[cellIndex].itemContainer.transform.childCount}");
+                }
+            }
         }
         private void PlaceItemInFirstEmptySlot(ItemStack item)
         {
