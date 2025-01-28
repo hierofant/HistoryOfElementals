@@ -67,6 +67,10 @@ namespace Inventory
             ItemStack testcell = GameItems.GetItem(1);
             testcell.Count = 128;
             AddItem(testcell);
+            testcell.Count = 12;
+            AddItem(testcell);
+            testcell.Count = 22;
+            AddItem(testcell);
             ItemStack testcell2 = GameItems.GetItem(2);
             testcell2.Count = 128;
             AddItem(testcell2);
@@ -148,18 +152,18 @@ namespace Inventory
             {
                 if (RectTransformUtility.RectangleContainsScreenPoint(Cells[i].itemContainer.GetComponent<RectTransform>(), Mouse.current.position.ReadValue()))
                 {
-                    if (Cells[i].itemStack.Item.id == draggedItem.Item.id)
+                    if (Cells[i].itemStack.Item.id == draggedItem.Item.id && Cells[i].itemStack.Count + draggedItem.Count <= Cells[i].itemStack.Item.MaxCount)
                     {
                         Cells[i].itemStack.Count += draggedItem.Count;
                         UpdateCellUI(i);
+                        Destroy(draggedItemObject);
+                        isDraggingItem = false;
                     }
                     else
                     {
                         // Если предметы разные, меняем местами
                         SwapItemsInSlot(draggedItem, i);
                     }
-                    Destroy(draggedItemObject);
-                    isDraggingItem = false;
                     return;
                 }
             }
@@ -187,12 +191,10 @@ namespace Inventory
         private void StartDraggingItem(ItemStack item, int? cell = null)
         {
             draggedItem = item.Clone();
-            Debug.Log(draggedItem.Item.id + item.Item.id);
-            if(draggedItem.Item.icon.name != GameItems.GetItem(item.Item.id).Item.name)
-            {
-                Debug.Log("ПИЗДЕЦНАХУЙ");
-            }
+            // Создаем объект для перетаскивания
             draggedItemObject = new GameObject("DraggedItemIcon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+
+            // Логика для ячейки, если она не равна null
             if (cell != null)
             {
                 if (Cells[cell.Value].itemCountText != null)
@@ -205,11 +207,18 @@ namespace Inventory
                     draggedItem.Count = Cells[cell.Value].itemStack.Count;
                 }
             }
-            Debug.Log(draggedItem.Item.id);
-            if (draggedItem.Item.icon.name != GameItems.GetItem(item.Item.id).Item.name)
+            else
             {
-                Debug.Log("ПИЗДЕЦНАХУЙ");
+                // Если cell == null, просто присваиваем количество из текущего элемента
+                draggedItem.Count = item.Count;
+
+                // Создаем текст с количеством, если это нужно даже без ячейки
+                Instantiate(countUIText, draggedItemObject.transform).GetComponent<TMP_Text>().text = draggedItem.Count.ToString();
             }
+
+
+            Debug.Log(draggedItem.Item.id);
+            // Настройка перетаскиваемого объекта
             draggedItemObject.GetComponent<Image>().preserveAspect = true;
             draggedItemObject.transform.SetParent(inventoryUI.transform);
             draggedItemObject.GetComponent<Image>().sprite = draggedItem.Item.icon;
@@ -411,20 +420,36 @@ namespace Inventory
 
         private void SwapItemsInSlot(ItemStack item, int targetCell)
         {
-            if (Cells[targetCell].itemStack.Item.id != 0)
+            // Сохраняем предмет из целевой ячейки
+            ItemStack targetItem = Cells[targetCell].itemStack.Clone();
+
+            // Если целевая ячейка не пуста
+            if (targetItem.Item.id != 0)
             {
-                ItemStack oldItem = Cells[targetCell].itemStack.Clone();
-                RemoveItem(targetCell);
-                AddItem(item);
+                Debug.Log($"Нужно поменять местами предмет с id {targetItem.Item.id} и предмет с id {item.Item.id}");
+
+                // Удаляем объект с изображением перетаскиваемого предмета
                 Destroy(draggedItemObject);
-                isDraggingItem = false;
-                StartDraggingItem(oldItem);
+
+                // Инициализируем перетаскивание для старого предмета (передаем cell)
+                StartDraggingItem(targetItem);
+
+                // Удаляем старый предмет из целевой ячейки
+                RemoveItem(targetCell);
+
+                // Добавляем новый предмет в целевую ячейку
+                AddItem(item, targetCell);
             }
             else
             {
+                // Если целевая ячейка пуста, просто добавляем новый предмет
                 AddItem(item, targetCell);
+                Destroy(draggedItemObject);
+                isDraggingItem = false;
             }
         }
+
+
 
         private void HandleHotbarNavigation()
         {
