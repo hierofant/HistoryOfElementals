@@ -6,6 +6,8 @@ using TMPro;
 using Player;
 using Game.Items;
 using Debug = UnityEngine.Debug;
+using Unity.VisualScripting;
+
 namespace Inventory
 {
     public class InventoryManager : MonoBehaviour
@@ -32,6 +34,7 @@ namespace Inventory
         private GameObject draggedItemObject; // ������ ���������������� ��������
         private ItemStack draggedItem;
         private PlayerController2D playerController; // ��� ���������� �������� ��� �������� ���������
+        private bool isFirstClick;
 
         public static event Action<ItemStack, int> OnItemUpdated; // ������� ��� ���������� �������� � ������
 
@@ -122,29 +125,92 @@ namespace Inventory
             {
                 inputManager.Player.Enable();
                 playerController.EnableInput();
+
+                for (int i = 0; i < Cells.Length; i++)
+                {
+                    Cells[i].itemContainer.GetComponent<Image>().color = Color.white;
+                }
             }
         }
 
         private void HandleMouseInteraction()
         {
             Vector2 mousePos = Mouse.current.position.ReadValue();
+            HighlightSlots(mousePos);
 
             if (isDraggingItem)
             {
                 draggedItemObject.transform.position = mousePos;
 
-                if (Mouse.current.leftButton.wasPressedThisFrame)
+                if (Mouse.current.leftButton.wasReleasedThisFrame)
                 {
-                    TryPlaceItemInSlot();
+                    if (!isFirstClick)
+                    {
+                        TryPlaceItemInSlot();
+                    }
+                    isFirstClick = false; // Сброс флага после обработки
+                }
+                else if (Mouse.current.rightButton.wasReleasedThisFrame)
+                {
+                    TryPlaceItemInSlotRightButton();
                 }
             }
             else
             {
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
+                    isFirstClick = true;
                     CheckSlotForDrag(mousePos);
                 }
             }
+        }
+
+        private void HighlightSlots(Vector2 mousePos)
+        {
+            for (int i = 0; i < Cells.Length; i++)
+            {
+                if (RectTransformUtility.RectangleContainsScreenPoint(Cells[i].itemContainer.GetComponent<RectTransform>(), mousePos))
+                {
+                    Cells[i].itemContainer.GetComponent<Image>().color = Color.blue;
+                }
+                else
+                {
+                    Cells[i].itemContainer.GetComponent<Image>().color = Color.white;
+                }
+            }
+        }
+
+        private void TryPlaceItemInSlotRightButton()
+        {
+            for (int i = 0; i < Cells.Length; i++)
+            {
+                if (RectTransformUtility.RectangleContainsScreenPoint(Cells[i].itemContainer.GetComponent<RectTransform>(), Mouse.current.position.ReadValue()))
+                {
+                    if (Cells[i].itemStack.Item.id == draggedItem.Item.id && Cells[i].itemStack.Count + 1 <= Cells[i].itemStack.Item.MaxCount)
+                    {
+                        Cells[i].itemStack.Count += 1;
+                        UpdateCellUI(i);
+                        draggedItem.Count -= 1;
+                        draggedItemObject.GetComponentInChildren<TMP_Text>().text = draggedItem.Count.ToString();
+                    }
+                    else if(Cells[i].itemStack.Item.id == 0)
+                    {
+                        ItemStack newItem = draggedItem.Clone();
+                        newItem.Count = 1;
+                        AddItem(newItem, i);
+                    }
+                    else
+                    {
+                        // Если предметы разные, меняем местами
+                        SwapItemsInSlot(draggedItem, i);
+                    }
+                    return;
+                }
+            }
+
+            // Если не попали в ячейку, просто убираем иконку
+            Destroy(draggedItemObject);
+            isDraggingItem = false;
         }
 
         private void TryPlaceItemInSlot()
