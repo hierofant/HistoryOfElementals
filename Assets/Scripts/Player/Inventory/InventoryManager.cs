@@ -17,6 +17,7 @@ namespace Inventory
             public ItemStack itemStack;
             public RectTransform itemContainer = null;
             public TMP_Text itemCountText = null;
+            public Image itemSprite = null;
         }
         [SerializeField] private RectTransform[] CellsUI; // ������ ��������� (������� � �������� ������)
         [SerializeField] private GameObject cellHighlight; // ��������� ������� ������
@@ -162,6 +163,10 @@ namespace Inventory
                     isFirstClick = true;
                     CheckSlotForDrag(mousePos);
                 }
+                else if (Mouse.current.rightButton.wasReleasedThisFrame)
+                {
+                    CheckSlotForHalfDrag(mousePos);
+                }
             }
         }
 
@@ -190,14 +195,32 @@ namespace Inventory
                     {
                         Cells[i].itemStack.Count += 1;
                         UpdateCellUI(i);
-                        draggedItem.Count -= 1;
-                        draggedItemObject.GetComponentInChildren<TMP_Text>().text = draggedItem.Count.ToString();
+                        if (draggedItem.Count == 1)
+                        {
+                            Destroy(draggedItemObject);
+                            isDraggingItem = false;
+                        }
+                        else
+                        {
+                            draggedItem.Count -= 1;
+                            draggedItemObject.GetComponentInChildren<TMP_Text>().text = draggedItem.Count.ToString();
+                        }
                     }
                     else if(Cells[i].itemStack.Item.id == 0)
                     {
                         ItemStack newItem = draggedItem.Clone();
                         newItem.Count = 1;
                         AddItem(newItem, i);
+                        if (draggedItem.Count == 1)
+                        {
+                            Destroy(draggedItemObject);
+                            isDraggingItem = false;
+                        }
+                        else
+                        {
+                            draggedItem.Count -= 1;
+                            draggedItemObject.GetComponentInChildren<TMP_Text>().text = draggedItem.Count.ToString();
+                        }
                     }
                     else
                     {
@@ -240,7 +263,6 @@ namespace Inventory
             isDraggingItem = false;
         }
 
-
         private void CheckSlotForDrag(Vector2 mousePos)
         {
             for (int i = 0; i < Cells.Length; i++)
@@ -250,6 +272,28 @@ namespace Inventory
                 {
                     StartDraggingItem(Cells[i].itemStack, i);
                     RemoveItem(i);
+                    return;
+                }
+            }
+        }
+        private void CheckSlotForHalfDrag(Vector2 mousePos)
+        {
+            for (int i = 0; i < Cells.Length; i++)
+            {
+                Debug.Log(mousePos);
+                if (RectTransformUtility.RectangleContainsScreenPoint(Cells[i].itemContainer.GetComponent<RectTransform>(), mousePos) && Cells[i].itemStack.Item.id != 0)
+                {
+                    if(Cells[i].itemStack.Count == 1)
+                    {
+                        StartDraggingItem(Cells[i].itemStack, i);
+                        RemoveItem(i);
+                        return;
+                    }
+                    ItemStack newitem = Cells[i].itemStack.Clone();
+                    newitem.Count = (int)Math.Floor(newitem.Count / 2f);
+                    StartDraggingItem(newitem);
+                    Cells[i].itemStack.Count -= newitem.Count;
+                    UpdateCellUI(i);
                     return;
                 }
             }
@@ -390,37 +434,45 @@ namespace Inventory
 
             OnItemUpdated?.Invoke(Cells[inventoryCell].itemStack, inventoryCell);
         }
-
         private void UpdateCellUI(int cellIndex)
         {
+            // Обновление изображения предмета
+            if (Cells[cellIndex].itemStack.Item.icon != null)
+            {
+                if (Cells[cellIndex].itemSprite == null)
+                {
+                    Cells[cellIndex].itemSprite = Instantiate(imageUI, Cells[cellIndex].itemContainer.transform).GetComponent<Image>();
+                }
+                Cells[cellIndex].itemSprite.sprite = Cells[cellIndex].itemStack.Item.icon;
+            }
+            else
+            {
+                if (Cells[cellIndex].itemSprite != null)
+                {
+                    Destroy(Cells[cellIndex].itemSprite.gameObject);
+                    Cells[cellIndex].itemSprite = null;
+                }
+            }
+
+            // Обновление текста количества предметов
             if (Cells[cellIndex].itemStack.Count > 1)
             {
-                Cells[cellIndex].itemCountText = Instantiate(countUIText, Cells[cellIndex].itemContainer.transform).GetComponent<TMP_Text>();
+                if (Cells[cellIndex].itemCountText == null)
+                {
+                    Cells[cellIndex].itemCountText = Instantiate(countUIText, Cells[cellIndex].itemContainer.transform).GetComponent<TMP_Text>();
+                }
                 Cells[cellIndex].itemCountText.text = Cells[cellIndex].itemStack.Count.ToString();
             }
             else
             {
-                if(Cells[cellIndex].itemCountText != null)
+                if (Cells[cellIndex].itemCountText != null)
                 {
                     Destroy(Cells[cellIndex].itemCountText.gameObject);
-                }
-            }
-            if (Cells[cellIndex].itemStack.Item.icon != null)
-            {
-                Instantiate(imageUI, Cells[cellIndex].itemContainer).GetComponent<Image>().sprite = Cells[cellIndex].itemStack.Item.icon;
-            }
-            else
-            {
-                if (Cells[cellIndex].itemContainer.transform.childCount != 0)
-                {
-                    for(int i = 0; i < Cells[cellIndex].itemContainer.transform.childCount; i++)
-                    {
-                        Destroy(Cells[cellIndex].itemContainer.GetChild(i).gameObject);
-                    }
-                    Debug.Log($"!=0, ={Cells[cellIndex].itemContainer.transform.childCount}");
+                    Cells[cellIndex].itemCountText = null;
                 }
             }
         }
+
         private void PlaceItemInFirstEmptySlot(ItemStack item)
         {
             int slot = FindFirstSlot();
@@ -503,7 +555,6 @@ namespace Inventory
                 RemoveItem(slot, itemCount);
             }
         }
-
         private void SwapItemsInSlot(ItemStack item, int targetCell)
         {
             // Сохраняем предмет из целевой ячейки
@@ -525,6 +576,9 @@ namespace Inventory
 
                 // Добавляем новый предмет в целевую ячейку
                 AddItem(item, targetCell);
+
+                // Обновляем интерфейс ячейки
+                UpdateCellUI(targetCell);
             }
             else
             {
@@ -532,10 +586,11 @@ namespace Inventory
                 AddItem(item, targetCell);
                 Destroy(draggedItemObject);
                 isDraggingItem = false;
+
+                // Обновляем интерфейс ячейки
+                UpdateCellUI(targetCell);
             }
         }
-
-
 
         private void HandleHotbarNavigation()
         {
@@ -573,4 +628,3 @@ namespace Inventory
     }
 
 }
-

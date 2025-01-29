@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc74276c1382a0a4aa18bfa12edfa34a, type: 3}
+  m_Name: ITEM_WoodSword
+  m_EditorClassIdentifier: 
+  MaxCount: 1
+  id: 3
+  displayName: "\u041C\u0435\u0447 \u0438\u0437 \u043B\u0438\u0441\u0442\u0432\u0435\u043D\u043D\u0438\u0446\u044B"
+  systemName: drevinius_sword
+  description: "\u041E\u043D \u0442\u0430\u043A\u043E\u0439 \u043F\u0440\u043E\u0447\u043D\u044B\u0439
+    \u0447\u0442\u043E \u043C\u043E\u0436\u0435\u0442 \u0441\u043B\u043E\u043C\u0430\u0442\u044C
+    \u0434\u0430\u0436\u0435 \u043A\u0430\u043C\u0435\u043D\u044C!"
+  icon: {fileID: -1933465643521262191, guid: eacd352271586444a89965324e58e184, type: 3}
+  prefab: {fileID: 0}
+  type: 1
+  projectileComponent:
+    projectileDamage: 5
+    speed: 10
+    range: 20
+  meleeComponent:
+    durability: 100
+    sharpness: 10
+    attackSpeed: 1
+  shootingComponent:
+    durability: 100
+    tension: 50
+    reloadTime: 1.5
+  foodComponent:
+    saturation: 10
+    consumeTime: 2
+  armorComponent:
+    durability: 100
+    protectiont: 10
