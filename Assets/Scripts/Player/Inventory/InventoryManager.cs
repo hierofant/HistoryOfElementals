@@ -14,61 +14,59 @@ namespace Inventory
     {
         public class InventoryItemCell
         {
-            public ItemStack itemStack;
-            public RectTransform itemContainer = null;
-            public TMP_Text itemCountText = null;
-            public Image itemSprite = null;
+            public ItemStack ItemStack = null; 
+            public RectTransform ItemContainer = null;
+            public TMP_Text ItemCountText = null;
+            public Image ItemSprite = null;
         }
-        [SerializeField] private RectTransform[] CellsUI; // ������ ��������� (������� � �������� ������)
-        [SerializeField] private GameObject cellHighlight; // ��������� ������� ������
-        [SerializeField] private GameObject inventoryUI; // ������ ���������
-        [SerializeField] private GameObject countUIText; // ����� ����������
-        [SerializeField] private GameObject imageUI; // ����� ����������
-        [SerializeField] private GameObject thrownObject; // ������ ������������ ��������
-        [SerializeField] private int currentCell = 0; // ������� ��������� ������ � ������� ������
-        [SerializeField] private int hotbarSize = 5; // ���������� ������ � ������� ����
-        private InventoryItemCell[] Cells; // ��� ����� ��������� (� ������� ���, � �������� ���������)
-        private InputManager inputManager; // ���������� ������
-        private GameItems gameItems; // ������ �� ����� � ����������
-        private bool isInventoryOpen = false; // ��������� ���������
-        private bool isDraggingItem = false; // ������ �������������� ��������
-        private GameObject draggedItemObject; // ������ ���������������� ��������
-        private ItemStack draggedItem;
-        private PlayerController2D playerController; // ��� ���������� �������� ��� �������� ���������
-        private bool isFirstClick;
+        [SerializeField] private RectTransform[] _cellsUI; // ������ ��������� (������� � �������� ������)
+        [SerializeField] private GameObject _cellHighlight; // ��������� ������� ������
+        [SerializeField] private GameObject _inventoryUI; // ������ ���������
+        [SerializeField] private GameObject _countUIText; // ����� ����������
+        [SerializeField] private GameObject _imageUI; // ����� ����������
+        [SerializeField] private GameObject _thrownObject; // ������ ������������ ��������
+        [SerializeField] private int _currentCell = 0; // ������� ��������� ������ � ������� ������
+        [SerializeField] private int _hotbarSize = 5; // ���������� ������ � ������� ����
+        private InventoryItemCell[] _cells; // ��� ����� ��������� (� ������� ���, � �������� ���������)
+        private InputManager _inputManager; // ���������� ������
+        private bool _isInventoryOpen = false; // ��������� ���������
+        private bool _isDraggingItem = false; // ������ �������������� ��������
+        private GameObject _draggedItemObject; // ������ ���������������� ��������
+        private ItemStack _draggedItem;
+        private PlayerController2D _playerController; // ��� ���������� �������� ��� �������� ���������
+        private bool _isFirstClick;
 
         public static event Action<ItemStack, int> OnItemUpdated; // ������� ��� ���������� �������� � ������
 
         private void Awake()
         {
-            Cells = new InventoryItemCell[CellsUI.Length];
-            for (int i = 0; i < Cells.Length; i++)
+            _cells = new InventoryItemCell[_cellsUI.Length];
+            for (int i = 0; i < _cells.Length; i++)
             {
-                Cells[i] = new InventoryItemCell();
+                _cells[i] = new InventoryItemCell();
             }
-            for (int i = 0; i < Cells.Length; i++)
+            for (int i = 0; i < _cells.Length; i++)
             {
-                Cells[i].itemContainer = CellsUI[i];
-                Cells[i].itemCountText = CellsUI[i].GetComponentInChildren<TMP_Text>();
+                _cells[i].ItemContainer = _cellsUI[i];
+                _cells[i].ItemCountText = _cellsUI[i].GetComponentInChildren<TMP_Text>();
             }
 
-            cellHighlight.GetComponent<RectTransform>().position = CellsUI[currentCell].GetComponent<RectTransform>().position;
+            _cellHighlight.GetComponent<RectTransform>().position = _cellsUI[_currentCell].GetComponent<RectTransform>().position;
 
-            inputManager = new InputManager();
-            inputManager.UI.Enable();
-            gameItems = GetComponent<GameItems>();
-            playerController = FindFirstObjectByType<PlayerController2D>();
+            _inputManager = new InputManager();
+            _inputManager.UI.Enable();
+            _playerController = FindFirstObjectByType<PlayerController2D>();
 
             UpdateCurrentItem();
         }
         private void Start()
         {
-            for (int i = 0; i < Cells.Length; i++)
+            for (int i = 0; i < _cells.Length; i++)
             {
-                Cells[i].itemStack = GameItems.GetItem(0).Clone();
+                _cells[i].ItemStack = GameItems.GetItem(0).Clone();
                 UpdateCellUI(i);
             }
-            draggedItem = GameItems.GetItem(0);
+            _draggedItem = GameItems.GetItem(0);
             ItemStack testcell = GameItems.GetItem(1);
             testcell.Count = 128;
             AddItem(testcell);
@@ -83,16 +81,16 @@ namespace Inventory
 
         private void Update()
         {
-            if (inputManager.UI.ToggleInventory.WasPressedThisFrame())
+            if (_inputManager.UI.ToggleInventory.WasPressedThisFrame())
             {
                 ToggleInventory();
             }
-            if (inputManager.UI.ThrowObject.WasPressedThisFrame())
+            if (_inputManager.UI.ThrowObject.WasPressedThisFrame())
             {
                 ThrowObject();
             }
 
-            if (isInventoryOpen)
+            if (_isInventoryOpen)
             {
                 HandleMouseInteraction();
             }
@@ -104,32 +102,32 @@ namespace Inventory
 
         private void ThrowObject()
         {
-            GameObject obj = Instantiate(thrownObject);
+            GameObject obj = Instantiate(_thrownObject);
             obj.transform.position = gameObject.transform.position + new Vector3(0, 1.5f, 0);
-            obj.GetComponent<ThrownObjectController>().SetItem(Cells[currentCell].itemStack);
-            obj.GetComponent<SpriteRenderer>().sprite = GameItems.GetItem(currentCell).Item.icon;
+            obj.GetComponent<ThrownObjectController>().SetItem(_cells[_currentCell].ItemStack);
+            obj.GetComponent<SpriteRenderer>().sprite = GameItems.GetItem(_currentCell).Item.icon;
             obj.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(gameObject.transform.lossyScale.x * 4, 2);
-            RemoveItem(currentCell);
+            RemoveItem(_currentCell);
         }
 
         private void ToggleInventory()
         {
-            isInventoryOpen = !isInventoryOpen;
-            inventoryUI.SetActive(isInventoryOpen);
+            _isInventoryOpen = !_isInventoryOpen;
+            _inventoryUI.SetActive(_isInventoryOpen);
 
-            if (isInventoryOpen)
+            if (_isInventoryOpen)
             {
-                inputManager.Player.Disable();
-                playerController.DisableInput();
+                _inputManager.Player.Disable();
+                _playerController.DisableInput();
             }
             else
             {
-                inputManager.Player.Enable();
-                playerController.EnableInput();
+                _inputManager.Player.Enable();
+                _playerController.EnableInput();
 
-                for (int i = 0; i < Cells.Length; i++)
+                for (int i = 0; i < _cells.Length; i++)
                 {
-                    Cells[i].itemContainer.GetComponent<Image>().color = Color.white;
+                    _cells[i].ItemContainer.GetComponent<Image>().color = Color.white;
                 }
             }
         }
@@ -139,28 +137,28 @@ namespace Inventory
             Vector2 mousePos = Mouse.current.position.ReadValue();
             HighlightSlots(mousePos);
 
-            if (isDraggingItem)
+            if (_isDraggingItem)
             {
-                draggedItemObject.transform.position = mousePos;
+                _draggedItemObject.transform.position = mousePos;
 
                 if (Mouse.current.leftButton.wasReleasedThisFrame)
                 {
-                    if (!isFirstClick)
+                    if (!_isFirstClick)
                     {
                         TryPlaceItemInSlot();
                     }
-                    isFirstClick = false; // Сброс флага после обработки
+                    _isFirstClick = false; // Сброс флага после обработки
                 }
                 else if (Mouse.current.rightButton.wasReleasedThisFrame)
                 {
-                    TryPlaceItemInSlotRightButton();
+                    TryPlaceItemInSlotRightClick();
                 }
             }
             else
             {
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
-                    isFirstClick = true;
+                    _isFirstClick = true;
                     CheckSlotForDrag(mousePos);
                 }
                 else if (Mouse.current.rightButton.wasReleasedThisFrame)
@@ -172,105 +170,105 @@ namespace Inventory
 
         private void HighlightSlots(Vector2 mousePos)
         {
-            for (int i = 0; i < Cells.Length; i++)
+            for (int i = 0; i < _cells.Length; i++)
             {
-                if (RectTransformUtility.RectangleContainsScreenPoint(Cells[i].itemContainer.GetComponent<RectTransform>(), mousePos))
+                if (RectTransformUtility.RectangleContainsScreenPoint(_cells[i].ItemContainer.GetComponent<RectTransform>(), mousePos))
                 {
-                    Cells[i].itemContainer.GetComponent<Image>().color = Color.blue;
+                    _cells[i].ItemContainer.GetComponent<Image>().color = Color.blue;
                 }
                 else
                 {
-                    Cells[i].itemContainer.GetComponent<Image>().color = Color.white;
+                    _cells[i].ItemContainer.GetComponent<Image>().color = Color.white;
                 }
             }
         }
 
-        private void TryPlaceItemInSlotRightButton()
+        private void TryPlaceItemInSlotRightClick()
         {
-            for (int i = 0; i < Cells.Length; i++)
+            for (int i = 0; i < _cells.Length; i++)
             {
-                if (RectTransformUtility.RectangleContainsScreenPoint(Cells[i].itemContainer.GetComponent<RectTransform>(), Mouse.current.position.ReadValue()))
+                if (RectTransformUtility.RectangleContainsScreenPoint(_cells[i].ItemContainer.GetComponent<RectTransform>(), Mouse.current.position.ReadValue()))
                 {
-                    if (Cells[i].itemStack.Item.id == draggedItem.Item.id && Cells[i].itemStack.Count + 1 <= Cells[i].itemStack.Item.MaxCount)
+                    if (_cells[i].ItemStack.Item.id == _draggedItem.Item.id && _cells[i].ItemStack.Count + 1 <= _cells[i].ItemStack.Item.MaxCount)
                     {
-                        Cells[i].itemStack.Count += 1;
+                        _cells[i].ItemStack.Count += 1;
                         UpdateCellUI(i);
-                        if (draggedItem.Count == 1)
+                        if (_draggedItem.Count == 1)
                         {
-                            Destroy(draggedItemObject);
-                            isDraggingItem = false;
+                            Destroy(_draggedItemObject);
+                            _isDraggingItem = false;
                         }
                         else
                         {
-                            draggedItem.Count -= 1;
-                            draggedItemObject.GetComponentInChildren<TMP_Text>().text = draggedItem.Count.ToString();
+                            _draggedItem.Count -= 1;
+                            _draggedItemObject.GetComponentInChildren<TMP_Text>().text = _draggedItem.Count.ToString();
                         }
                     }
-                    else if(Cells[i].itemStack.Item.id == 0)
+                    else if(_cells[i].ItemStack.Item.id == 0)
                     {
-                        ItemStack newItem = draggedItem.Clone();
+                        ItemStack newItem = _draggedItem.Clone();
                         newItem.Count = 1;
                         AddItem(newItem, i);
-                        if (draggedItem.Count == 1)
+                        if (_draggedItem.Count == 1)
                         {
-                            Destroy(draggedItemObject);
-                            isDraggingItem = false;
+                            Destroy(_draggedItemObject);
+                            _isDraggingItem = false;
                         }
                         else
                         {
-                            draggedItem.Count -= 1;
-                            draggedItemObject.GetComponentInChildren<TMP_Text>().text = draggedItem.Count.ToString();
+                            _draggedItem.Count -= 1;
+                            _draggedItemObject.GetComponentInChildren<TMP_Text>().text = _draggedItem.Count.ToString();
                         }
                     }
                     else
                     {
                         // Если предметы разные, меняем местами
-                        SwapItemsInSlot(draggedItem, i);
+                        SwapItemsInSlot(_draggedItem, i);
                     }
                     return;
                 }
             }
 
             // Если не попали в ячейку, просто убираем иконку
-            Destroy(draggedItemObject);
-            isDraggingItem = false;
+            Destroy(_draggedItemObject);
+            _isDraggingItem = false;
         }
 
         private void TryPlaceItemInSlot()
         {
-            for (int i = 0; i < Cells.Length; i++)
+            for (int i = 0; i < _cells.Length; i++)
             {
-                if (RectTransformUtility.RectangleContainsScreenPoint(Cells[i].itemContainer.GetComponent<RectTransform>(), Mouse.current.position.ReadValue()))
+                if (RectTransformUtility.RectangleContainsScreenPoint(_cells[i].ItemContainer.GetComponent<RectTransform>(), Mouse.current.position.ReadValue()))
                 {
-                    if (Cells[i].itemStack.Item.id == draggedItem.Item.id && Cells[i].itemStack.Count + draggedItem.Count <= Cells[i].itemStack.Item.MaxCount)
+                    if (_cells[i].ItemStack.Item.id == _draggedItem.Item.id && _cells[i].ItemStack.Count + _draggedItem.Count <= _cells[i].ItemStack.Item.MaxCount)
                     {
-                        Cells[i].itemStack.Count += draggedItem.Count;
+                        _cells[i].ItemStack.Count += _draggedItem.Count;
                         UpdateCellUI(i);
-                        Destroy(draggedItemObject);
-                        isDraggingItem = false;
+                        Destroy(_draggedItemObject);
+                        _isDraggingItem = false;
                     }
                     else
                     {
                         // Если предметы разные, меняем местами
-                        SwapItemsInSlot(draggedItem, i);
+                        SwapItemsInSlot(_draggedItem, i);
                     }
                     return;
                 }
             }
 
             // Если не попали в ячейку, просто убираем иконку
-            Destroy(draggedItemObject);
-            isDraggingItem = false;
+            Destroy(_draggedItemObject);
+            _isDraggingItem = false;
         }
 
         private void CheckSlotForDrag(Vector2 mousePos)
         {
-            for (int i = 0; i < Cells.Length; i++)
+            for (int i = 0; i < _cells.Length; i++)
             {
                 Debug.Log(mousePos);
-                if (RectTransformUtility.RectangleContainsScreenPoint(Cells[i].itemContainer.GetComponent<RectTransform>(), mousePos) && Cells[i].itemStack.Item.id != 0)
+                if (RectTransformUtility.RectangleContainsScreenPoint(_cells[i].ItemContainer.GetComponent<RectTransform>(), mousePos) && _cells[i].ItemStack.Item.id != 0)
                 {
-                    StartDraggingItem(Cells[i].itemStack, i);
+                    StartDraggingItem(_cells[i].ItemStack, i);
                     RemoveItem(i);
                     return;
                 }
@@ -278,21 +276,21 @@ namespace Inventory
         }
         private void CheckSlotForHalfDrag(Vector2 mousePos)
         {
-            for (int i = 0; i < Cells.Length; i++)
+            for (int i = 0; i < _cells.Length; i++)
             {
                 Debug.Log(mousePos);
-                if (RectTransformUtility.RectangleContainsScreenPoint(Cells[i].itemContainer.GetComponent<RectTransform>(), mousePos) && Cells[i].itemStack.Item.id != 0)
+                if (RectTransformUtility.RectangleContainsScreenPoint(_cells[i].ItemContainer.GetComponent<RectTransform>(), mousePos) && _cells[i].ItemStack.Item.id != 0)
                 {
-                    if(Cells[i].itemStack.Count == 1)
+                    if(_cells[i].ItemStack.Count == 1)
                     {
-                        StartDraggingItem(Cells[i].itemStack, i);
+                        StartDraggingItem(_cells[i].ItemStack, i);
                         RemoveItem(i);
                         return;
                     }
-                    ItemStack newitem = Cells[i].itemStack.Clone();
+                    ItemStack newitem = _cells[i].ItemStack.Clone();
                     newitem.Count = (int)Math.Floor(newitem.Count / 2f);
                     StartDraggingItem(newitem);
-                    Cells[i].itemStack.Count -= newitem.Count;
+                    _cells[i].ItemStack.Count -= newitem.Count;
                     UpdateCellUI(i);
                     return;
                 }
@@ -301,41 +299,41 @@ namespace Inventory
 
         private void StartDraggingItem(ItemStack item, int? cell = null)
         {
-            draggedItem = item.Clone();
+            _draggedItem = item.Clone();
             // Создаем объект для перетаскивания
-            draggedItemObject = new GameObject("DraggedItemIcon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            _draggedItemObject = new GameObject("DraggedItemIcon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
 
             // Логика для ячейки, если она не равна null
             if (cell != null)
             {
-                if (Cells[cell.Value].itemCountText != null)
+                if (_cells[cell.Value].ItemCountText != null)
                 {
-                    draggedItem.Count = Cells[cell.Value].itemStack.Count;
-                    Instantiate(countUIText, draggedItemObject.transform).GetComponent<TMP_Text>().text = draggedItem.Count.ToString();
+                    _draggedItem.Count = _cells[cell.Value].ItemStack.Count;
+                    Instantiate(_countUIText, _draggedItemObject.transform).GetComponent<TMP_Text>().text = _draggedItem.Count.ToString();
                 }
                 else
                 {
-                    draggedItem.Count = Cells[cell.Value].itemStack.Count;
+                    _draggedItem.Count = _cells[cell.Value].ItemStack.Count;
                 }
             }
             else
             {
                 // Если cell == null, просто присваиваем количество из текущего элемента
-                draggedItem.Count = item.Count;
+                _draggedItem.Count = item.Count;
 
                 // Создаем текст с количеством, если это нужно даже без ячейки
-                Instantiate(countUIText, draggedItemObject.transform).GetComponent<TMP_Text>().text = draggedItem.Count.ToString();
+                Instantiate(_countUIText, _draggedItemObject.transform).GetComponent<TMP_Text>().text = _draggedItem.Count.ToString();
             }
 
 
-            Debug.Log(draggedItem.Item.id);
+            Debug.Log(_draggedItem.Item.id);
             // Настройка перетаскиваемого объекта
-            draggedItemObject.GetComponent<Image>().preserveAspect = true;
-            draggedItemObject.transform.SetParent(inventoryUI.transform);
-            draggedItemObject.GetComponent<Image>().sprite = draggedItem.Item.icon;
-            draggedItemObject.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
-            draggedItemObject.transform.SetAsLastSibling();
-            isDraggingItem = true;
+            _draggedItemObject.GetComponent<Image>().preserveAspect = true;
+            _draggedItemObject.transform.SetParent(_inventoryUI.transform);
+            _draggedItemObject.GetComponent<Image>().sprite = _draggedItem.Item.icon;
+            _draggedItemObject.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
+            _draggedItemObject.transform.SetAsLastSibling();
+            _isDraggingItem = true;
         }
 
         public void AddItem(ItemStack item, int? inventoryCell = null)
@@ -367,28 +365,28 @@ namespace Inventory
         }
         public ItemStack GetInventoryItem(int inventoryCell)
         {
-            return Cells[inventoryCell].itemStack;
+            return _cells[inventoryCell].ItemStack;
         }
 
 
         public int GetCurrentCell()
         {
-            return currentCell;
+            return _currentCell;
         }
 
         public int FindFirstSlot(int? slot = 0)
         {
-            for (int i = 0; i < Cells.Length; i++)
+            for (int i = 0; i < _cells.Length; i++)
             {
-                Debug.Log(Cells[i].itemStack.Item.id);
-                if (Cells[i].itemStack.Item.id == slot && Cells[i].itemStack.Count < Cells[i].itemStack.Item.MaxCount)
+                Debug.Log(_cells[i].ItemStack.Item.id);
+                if (_cells[i].ItemStack.Item.id == slot && _cells[i].ItemStack.Count < _cells[i].ItemStack.Item.MaxCount)
                     return i;
             }
             return -1;
         }
         public int FindFirstSlotOfItemType(ItemType n)
         {
-            for (int i = 0; i < Cells.Length; i++)
+            for (int i = 0; i < _cells.Length; i++)
             {
                 if (GameItems.GetItem(i).Item.type == n)
                     return i;
@@ -401,18 +399,18 @@ namespace Inventory
             int maxCount = item.Item.MaxCount; // �������� ������������ ���������� ��� ������� ��������
 
             // ���������, ����� �� ���������� �������� � ������� ������
-            if (Cells[inventoryCell].itemStack.Item.id == item.Item.id && Cells[inventoryCell].itemStack.Item.name == item.Item.name && Cells[inventoryCell].itemStack.Item.description == item.Item.description)
+            if (_cells[inventoryCell].ItemStack.Item.id == item.Item.id && _cells[inventoryCell].ItemStack.Item.name == item.Item.name && _cells[inventoryCell].ItemStack.Item.description == item.Item.description)
             {
-                int availableSpace = maxCount - Cells[inventoryCell].itemStack.Count;
-                Debug.Log(availableSpace + " " + item.Count + " " + Cells[inventoryCell].itemStack.Count);
+                int availableSpace = maxCount - _cells[inventoryCell].ItemStack.Count;
+                Debug.Log(availableSpace + " " + item.Count + " " + _cells[inventoryCell].ItemStack.Count);
                 if (item.Count <= availableSpace)
                 {
-                    Cells[inventoryCell].itemStack.Count += item.Count;
+                    _cells[inventoryCell].ItemStack.Count += item.Count;
                     UpdateCellUI(inventoryCell);
                 }
                 else
                 {
-                    Cells[inventoryCell].itemStack.Count = maxCount;
+                    _cells[inventoryCell].ItemStack.Count = maxCount;
                     item.Count -= availableSpace;
                     if (item.Count > 0)
                     {
@@ -423,8 +421,8 @@ namespace Inventory
             }
             else
             {
-                Cells[inventoryCell].itemStack = item.Clone();
-                item.Count -= Cells[inventoryCell].itemStack.Count;
+                _cells[inventoryCell].ItemStack = item.Clone();
+                item.Count -= _cells[inventoryCell].ItemStack.Count;
                 if (item.Count > 0)
                 {   
                     PlaceItemInFirstEmptySlot(item); // �������� ���������� �������� � ������ ������ ������
@@ -432,43 +430,43 @@ namespace Inventory
                 UpdateCellUI(inventoryCell);
             }
 
-            OnItemUpdated?.Invoke(Cells[inventoryCell].itemStack, inventoryCell);
+            OnItemUpdated?.Invoke(_cells[inventoryCell].ItemStack, inventoryCell);
         }
         private void UpdateCellUI(int cellIndex)
         {
             // Обновление изображения предмета
-            if (Cells[cellIndex].itemStack.Item.icon != null)
+            if (_cells[cellIndex].ItemStack.Item.icon != null)
             {
-                if (Cells[cellIndex].itemSprite == null)
+                if (_cells[cellIndex].ItemSprite == null)
                 {
-                    Cells[cellIndex].itemSprite = Instantiate(imageUI, Cells[cellIndex].itemContainer.transform).GetComponent<Image>();
+                    _cells[cellIndex].ItemSprite = Instantiate(_imageUI, _cells[cellIndex].ItemContainer.transform).GetComponent<Image>();
                 }
-                Cells[cellIndex].itemSprite.sprite = Cells[cellIndex].itemStack.Item.icon;
+                _cells[cellIndex].ItemSprite.sprite = _cells[cellIndex].ItemStack.Item.icon;
             }
             else
             {
-                if (Cells[cellIndex].itemSprite != null)
+                if (_cells[cellIndex].ItemSprite != null)
                 {
-                    Destroy(Cells[cellIndex].itemSprite.gameObject);
-                    Cells[cellIndex].itemSprite = null;
+                    Destroy(_cells[cellIndex].ItemSprite.gameObject);
+                    _cells[cellIndex].ItemSprite = null;
                 }
             }
 
             // Обновление текста количества предметов
-            if (Cells[cellIndex].itemStack.Count > 1)
+            if (_cells[cellIndex].ItemStack.Count > 1)
             {
-                if (Cells[cellIndex].itemCountText == null)
+                if (_cells[cellIndex].ItemCountText == null)
                 {
-                    Cells[cellIndex].itemCountText = Instantiate(countUIText, Cells[cellIndex].itemContainer.transform).GetComponent<TMP_Text>();
+                    _cells[cellIndex].ItemCountText = Instantiate(_countUIText, _cells[cellIndex].ItemContainer.transform).GetComponent<TMP_Text>();
                 }
-                Cells[cellIndex].itemCountText.text = Cells[cellIndex].itemStack.Count.ToString();
+                _cells[cellIndex].ItemCountText.text = _cells[cellIndex].ItemStack.Count.ToString();
             }
             else
             {
-                if (Cells[cellIndex].itemCountText != null)
+                if (_cells[cellIndex].ItemCountText != null)
                 {
-                    Destroy(Cells[cellIndex].itemCountText.gameObject);
-                    Cells[cellIndex].itemCountText = null;
+                    Destroy(_cells[cellIndex].ItemCountText.gameObject);
+                    _cells[cellIndex].ItemCountText = null;
                 }
             }
         }
@@ -489,76 +487,42 @@ namespace Inventory
         {
             void SetItemToPlaceholder(int cellIndex)
             {
-                Cells[cellIndex].itemStack = GameItems.GetItem(0);
+                _cells[cellIndex].ItemStack = GameItems.GetItem(0);
                 UpdateCellUI(cellIndex);
             }
 
-            if (inventoryCell < hotbarSize)
+            if (inventoryCell < _hotbarSize)
             {
-                if (countRemove == null || countRemove.Value >= Cells[inventoryCell].itemStack.Count)
+                if (countRemove == null || countRemove.Value >= _cells[inventoryCell].ItemStack.Count)
                 {
                     SetItemToPlaceholder(inventoryCell);
                 }
                 else
                 {
-                    Cells[inventoryCell].itemStack.Count -= countRemove.Value;
+                    _cells[inventoryCell].ItemStack.Count -= countRemove.Value;
                     UpdateCellUI(inventoryCell);
                 }
             }
             else
             {
-                int mainInventoryIndex = inventoryCell - hotbarSize;
-                if (countRemove == null || countRemove.Value >= Cells[hotbarSize + mainInventoryIndex].itemStack.Count)
+                int mainInventoryIndex = inventoryCell - _hotbarSize;
+                if (countRemove == null || countRemove.Value >= _cells[_hotbarSize + mainInventoryIndex].ItemStack.Count)
                 {
-                    SetItemToPlaceholder(hotbarSize + mainInventoryIndex);
+                    SetItemToPlaceholder(_hotbarSize + mainInventoryIndex);
                 }
                 else
                 {
-                    Cells[hotbarSize + mainInventoryIndex].itemStack.Count -= countRemove.Value;
-                    UpdateCellUI(hotbarSize + mainInventoryIndex);
+                    _cells[_hotbarSize + mainInventoryIndex].ItemStack.Count -= countRemove.Value;
+                    UpdateCellUI(_hotbarSize + mainInventoryIndex);
                 }
             }
 
             OnItemUpdated?.Invoke(new ItemStack(), inventoryCell);
         }
-
-        public void RemoveItemToConsole(int itemID, int? itemCount = null, ItemType? l = null)
-        {
-            int slot = 0;
-            if (l != null)
-            {
-                slot = FindFirstSlotOfItemType(l.Value);
-            }
-            else
-            {
-                slot = FindFirstSlot(itemID);
-            }
-            if (itemCount == null)
-            {
-                RemoveItem(slot);
-            }
-            else
-            {
-                RemoveItem(slot, itemCount);
-            }
-        }
-        public void RemoveItemToConsoleOfItemType(ItemType l, int? itemCount = null)
-        {
-            int slot = FindFirstSlotOfItemType(l);
-
-            if (itemCount == null)
-            {
-                RemoveItem(slot);
-            }
-            else
-            {
-                RemoveItem(slot, itemCount);
-            }
-        }
         private void SwapItemsInSlot(ItemStack item, int targetCell)
         {
             // Сохраняем предмет из целевой ячейки
-            ItemStack targetItem = Cells[targetCell].itemStack.Clone();
+            ItemStack targetItem = _cells[targetCell].ItemStack.Clone();
 
             // Если целевая ячейка не пуста
             if (targetItem.Item.id != 0)
@@ -566,7 +530,7 @@ namespace Inventory
                 Debug.Log($"Нужно поменять местами предмет с id {targetItem.Item.id} и предмет с id {item.Item.id}");
 
                 // Удаляем объект с изображением перетаскиваемого предмета
-                Destroy(draggedItemObject);
+                Destroy(_draggedItemObject);
 
                 // Инициализируем перетаскивание для старого предмета (передаем cell)
                 StartDraggingItem(targetItem);
@@ -584,8 +548,8 @@ namespace Inventory
             {
                 // Если целевая ячейка пуста, просто добавляем новый предмет
                 AddItem(item, targetCell);
-                Destroy(draggedItemObject);
-                isDraggingItem = false;
+                Destroy(_draggedItemObject);
+                _isDraggingItem = false;
 
                 // Обновляем интерфейс ячейки
                 UpdateCellUI(targetCell);
@@ -599,32 +563,31 @@ namespace Inventory
 
             if (scrollValue < 0)
             {
-                currentCell = (currentCell + 1) % hotbarSize;
+                _currentCell = (_currentCell + 1) % _hotbarSize;
                 UpdateCurrentItem();
-                OnItemUpdated?.Invoke(GetInventoryItem(currentCell), currentCell);
+                OnItemUpdated?.Invoke(GetInventoryItem(_currentCell), _currentCell);
             }
             else if (scrollValue > 0)
             {
-                currentCell = (currentCell - 1 + hotbarSize) % hotbarSize;
+                _currentCell = (_currentCell - 1 + _hotbarSize) % _hotbarSize;
                 UpdateCurrentItem();
-                OnItemUpdated?.Invoke(GetInventoryItem(currentCell), currentCell);
+                OnItemUpdated?.Invoke(GetInventoryItem(_currentCell), _currentCell);
             }
         }
 
         private void UpdateCurrentItem()
         {
-            cellHighlight.GetComponent<RectTransform>().position = Cells[currentCell].itemContainer.GetComponent<RectTransform>().position;
+            _cellHighlight.GetComponent<RectTransform>().position = _cells[_currentCell].ItemContainer.GetComponent<RectTransform>().position;
         }
 
         public void EnableInput()
         {
-            inputManager.UI.Enable();
+            _inputManager.UI.Enable();
         }
 
         public void DisableInput()
         {
-            inputManager.UI.Disable();
+            _inputManager.UI.Disable();
         }
     }
-
 }
